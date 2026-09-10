@@ -6,7 +6,8 @@ public class Cell {
     private final int x;
     private final int y;
     private static final char HIDDEN_SYMBOL = '-';
-    private static final char REVEALED_SYMBOL = '+';
+    private static final char HIT_SYMBOL = 'X';
+    private static final char MISS_SYMBOL = 'O';
     private String displaySymbol;
     private Ship ship;
 
@@ -25,8 +26,8 @@ public class Cell {
         return y;
     }
 
-    public void reveal() {
-        displaySymbol = String.valueOf(REVEALED_SYMBOL);
+    public void reveal(boolean hit) {
+        displaySymbol = hit ? String.valueOf(HIT_SYMBOL) : String.valueOf(MISS_SYMBOL);
     }
 
     public boolean addShip(Ship ship) {
