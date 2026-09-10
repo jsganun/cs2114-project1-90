@@ -1,5 +1,7 @@
 package gameboard;
 
+import ships.Ship;
+
 public class Grid {
     private final Cell[][] arr;
 
@@ -14,6 +16,10 @@ public class Grid {
                 arr[i][j] = new Cell(i, j);
             }
         }
+    }
+
+    public void createShip(int x, int y) {
+        arr[x][y].addShip(new Ship(arr[x][y]));
     }
 
     @Override
