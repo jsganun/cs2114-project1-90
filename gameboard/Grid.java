@@ -18,8 +18,49 @@ public class Grid {
         }
     }
 
-    public void createShip(int x, int y) {
-        arr[x][y].addShip(new Ship(arr[x][y]));
+    public void createShip(int r, int c) {
+        arr[r][c].addShip(new Ship(arr[r][c]));
+    }
+
+    public void shoot(int r, int c) {
+        Cell target = arr[r][c];
+        Shot shot = new Shot(target);
+        boolean hit = shot.shoot();
+        if (hit) {
+            target.reveal(hit);
+        }
+    }
+
+    public void translateCoords(String input) {
+        if (input.length() < 2 || input.length() > 3) {
+            throw new IllegalArgumentException();
+        }
+        if (input.length() == 3 && !isNumber(input.substring(1, 2))) {
+            throw new IllegalArgumentException();
+        }
+        String str = input.toUpperCase();
+        int row = letterToIndex(str.charAt(0));
+        int col;
+        if (input.length() == 3) {
+            col = Integer.parseInt(str.substring(1, 3)); // 10
+        } else {
+            col = Integer.parseInt(str.substring(1, 2)); // < 10
+        }
+    }
+
+    private int letterToIndex(char letter) {
+        // char 'A' is 65 -> index 0
+        // char 'J' is 74 -> index 9
+        return letter - 65;
+    }
+
+    private boolean isNumber(String in) {
+        try {
+            Integer.valueOf(in);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
     @Override
