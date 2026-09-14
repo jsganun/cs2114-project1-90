@@ -51,13 +51,13 @@ public class Grid {
 
     /**
      * Validates and translates a board coordinate such as {@code A1} or
-     * {@code J10}. The translated coordinates are currently local to this
-     * method.
+     * {@code J10}. The translated coordinates are returned in the form of an array.
      *
      * @param input the coordinate string to translate
+     * @return an int array with row at index 0 and col at index 1
      * @throws IllegalArgumentException if the input has an invalid format
      */
-    public void translateCoords(String input) {
+    public int[] translateCoords(String input) {
         if (input.length() < 2 || input.length() > 3) {
             throw new IllegalArgumentException();
         }
@@ -72,6 +72,7 @@ public class Grid {
         } else {
             col = Integer.parseInt(str.substring(1, 2)); // < 10
         }
+        return new int[] { row, col };
     }
 
     /**
