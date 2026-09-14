@@ -102,6 +102,16 @@ public class Grid {
         }
     }
 
+    private void appendRow(StringBuilder sb, int r) {
+        char letter = (char) ('A' + r);
+        int c;
+        sb.append(letter).append(" ");
+        for (c = 0; c < arr[0].length - 1; c++) {
+            sb.append(arr[r][c].toString()).append(" ");
+        }
+        sb.append(arr[r][c]).append("\n");
+    }
+
     /**
      * Returns the textual representation of the grid.
      *
@@ -116,13 +126,7 @@ public class Grid {
         }
         sb.append("\n");
         for (int r = 0; r < arr.length; r++) {
-            int c;
-            char letter = (char) ('A' + r);
-            sb.append(letter).append(" ");
-            for (c = 0; c < arr[0].length - 1; c++) {
-                sb.append(arr[r][c].toString()).append(" ");
-            }
-            sb.append(arr[r][c]).append("\n");
+            appendRow(sb, r);
         }
         return sb.toString();
     }
