@@ -110,10 +110,12 @@ public class Grid {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < arr.length; i++) {
-            for (int j = 0; j < arr[0].length; j++) {
-                // TODO
+        for (Cell[] row : arr) {
+            int c;
+            for (c = 0; c < arr[0].length - 1; c++) {
+                sb.append(row[c].toString()).append(" ");
             }
+            sb.append(row[c]).append("\n");
         }
         return sb.toString();
     }
