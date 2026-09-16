@@ -87,6 +87,27 @@ public class Cell {
     }
 
     /**
+     * Determines whether this cell is the same as obj.
+     *
+     * @param obj the object to compare this cell with
+     * @return {@code true} when obj has the same row and col as this cell
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != this.getClass()) {
+            return false;
+        }
+        Cell other = (Cell) obj;
+        return other.getRow() == this.getRow() && other.getCol() == this.getCol();
+    }
+
+    /**
      * Returns the symbol currently displayed for this cell.
      *
      * @return the display symbol
