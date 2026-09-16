@@ -8,11 +8,15 @@ import ships.Ship;
 public class Grid {
     /** The cells that make up this grid. */
     private final Cell[][] arr;
+    private final Ship[] ships;
+    private int numShips;
 
     /** Creates and initializes an empty 10-by-10 grid. */
     public Grid() {
         arr = new Cell[10][10];
         fillArray();
+        ships = new Ship[5];
+        numShips = 0;
     }
 
     /** Initializes every grid position with a new cell. */
@@ -34,7 +38,7 @@ public class Grid {
      */
     public void createShip(int r, int c, String orientation) {
         Cell[] cells = fillShipCells(new Cell(r, c), orientation);
-        arr[r][c].addShip(new Ship(cells));
+        ships[numShips++] = new Ship(cells);
     }
 
     private Cell[] fillShipCells(Cell center, String orientation) {
