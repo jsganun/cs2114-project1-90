@@ -27,11 +27,33 @@ public class Grid {
     /**
      * Creates a ship at the specified grid location.
      *
-     * @param r the zero-based row coordinate
-     * @param c the zero-based column coordinate
+     * @param r           the zero-based row coordinate
+     * @param c           the zero-based column coordinate
+     * @param orientation the orientation of the ship,
+     *                    either horizontal or vertical
      */
-    public void createShip(int r, int c) {
-        arr[r][c].addShip(new Ship(arr[r][c]));
+    public void createShip(int r, int c, String orientation) {
+        Cell[] cells = fillShipCells(new Cell(r, c), orientation);
+        arr[r][c].addShip(new Ship(cells));
+    }
+
+    private Cell[] fillShipCells(Cell center, String orientation) {
+        // Every ship is temporarily given a fixed length of 3
+        // for ease of implementation
+        Cell[] cells = new Cell[3];
+        switch (orientation.toUpperCase()) {
+            case "NORTH", "SOUTH" -> {
+                cells[1] = center;
+                cells[0] = new Cell(center.getRow() + 1, center.getCol());
+                cells[2] = new Cell(center.getRow() - 1, center.getCol());
+            }
+            case "EAST", "WEST" -> {
+                cells[1] = center;
+                cells[0] = new Cell(center.getRow(), center.getCol() + 1);
+                cells[2] = new Cell(center.getRow(), center.getCol() - 1);
+            }
+        }
+        return cells;
     }
 
     /**
@@ -44,9 +66,7 @@ public class Grid {
         Cell target = arr[r][c];
         Shot shot = new Shot(target);
         boolean hit = shot.shoot();
-        if (hit) {
-            target.reveal(hit);
-        }
+        target.reveal(hit);
     }
 
     /**
