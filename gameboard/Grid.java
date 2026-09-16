@@ -37,7 +37,11 @@ public class Grid {
      */
     public void createShip(int r, int c, String direction) {
         Cell[] cells = fillShipCells(r, c, direction);
-        ships[numShips++] = new Ship(cells);
+        Ship ship = new Ship(cells);
+        for (Cell cell : cells) {
+            cell.addShip(ship);
+        }
+        ships[numShips++] = ship;
     }
 
     private Cell[] fillShipCells(int r, int c, String direction) {
