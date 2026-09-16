@@ -8,7 +8,7 @@ import gameboard.Cell;
 public class Ship {
     /** The cells occupied by this ship. */
     private final Cell[] cells;
-    private int length;
+    private final int length;
 
     /**
      * Creates a ship in the specified array of cells.
@@ -17,6 +17,7 @@ public class Ship {
      */
     public Ship(Cell[] cells) {
         this.cells = cells;
+        this.length = cells.length;
     }
 
     /**
