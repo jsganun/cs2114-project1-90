@@ -36,25 +36,25 @@ public class Grid {
      * @param direction the direction of the ship
      */
     public void createShip(int r, int c, String direction) {
-        Cell[] cells = fillShipCells(new Cell(r, c), direction);
+        Cell[] cells = fillShipCells(r, c, direction);
         ships[numShips++] = new Ship(cells);
     }
 
-    private Cell[] fillShipCells(Cell center, String direction) {
+    private Cell[] fillShipCells(int r, int c, String direction) {
         // Every ship is temporarily given a fixed length of 3
         // for ease of implementation
         Cell[] cells = new Cell[3];
         switch (direction.toUpperCase()) {
 
             case "NORTH", "SOUTH" -> {
-                cells[1] = center;
-                cells[0] = new Cell(center.getRow() + 1, center.getCol());
-                cells[2] = new Cell(center.getRow() - 1, center.getCol());
+                cells[1] = arr[r][c];
+                cells[0] = arr[r + 1][c];
+                cells[2] = arr[r - 1][c];
             }
             case "EAST", "WEST" -> {
-                cells[1] = center;
-                cells[0] = new Cell(center.getRow(), center.getCol() + 1);
-                cells[2] = new Cell(center.getRow(), center.getCol() - 1);
+                cells[1] = arr[r][c];
+                cells[0] = arr[r][c + 1];
+                cells[2] = arr[r][c - 1];
             }
         }
         return cells;
