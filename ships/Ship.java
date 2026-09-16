@@ -6,24 +6,29 @@ import gameboard.Cell;
  * Represents a ship occupying one cell on the game board.
  */
 public class Ship {
-    /** The cell occupied by this ship. */
-    private final Cell cell;
+    /** The cells occupied by this ship. */
+    private final Cell[] cells;
+    private int length;
 
     /**
-     * Creates a ship at the specified cell.
+     * Creates a ship in the specified array of cells.
      *
-     * @param cell the cell occupied by the ship
+     * @param cell the cells occupied by the ship
      */
-    public Ship(Cell cell) {
-        this.cell = cell;
+    public Ship(Cell[] cells) {
+        this.cells = cells;
     }
 
     /**
-     * Gets the cell occupied by this ship.
+     * Gets the cells occupied by this ship.
      *
-     * @return the occupied cell
+     * @return an array containing the occupied cells
      */
-    public Cell getCell() {
-        return cell;
+    public Cell[] getCells() {
+        return cells;
+    }
+
+    public int getLength() {
+        return length;
     }
 }
