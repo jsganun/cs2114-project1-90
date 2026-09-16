@@ -31,21 +31,21 @@ public class Grid {
     /**
      * Creates a ship at the specified grid location.
      *
-     * @param r           the zero-based row coordinate
-     * @param c           the zero-based column coordinate
-     * @param orientation the orientation of the ship,
-     *                    either horizontal or vertical
+     * @param r         the zero-based row coordinate
+     * @param c         the zero-based column coordinate
+     * @param direction the direction of the ship
      */
-    public void createShip(int r, int c, String orientation) {
-        Cell[] cells = fillShipCells(new Cell(r, c), orientation);
+    public void createShip(int r, int c, String direction) {
+        Cell[] cells = fillShipCells(new Cell(r, c), direction);
         ships[numShips++] = new Ship(cells);
     }
 
-    private Cell[] fillShipCells(Cell center, String orientation) {
+    private Cell[] fillShipCells(Cell center, String direction) {
         // Every ship is temporarily given a fixed length of 3
         // for ease of implementation
         Cell[] cells = new Cell[3];
-        switch (orientation.toUpperCase()) {
+        switch (direction.toUpperCase()) {
+
             case "NORTH", "SOUTH" -> {
                 cells[1] = center;
                 cells[0] = new Cell(center.getRow() + 1, center.getCol());
