@@ -29,6 +29,11 @@ public class Ship {
         return cells;
     }
 
+    /**
+     * Returns the length of the ship.
+     *
+     * @return the length of the ships
+     */
     public int getLength() {
         return length;
     }
