@@ -4,7 +4,7 @@ import gameboard.Grid;
 
 public class TestGrid {
     public static void testToString() {
-        Grid grid = new Grid();
+        Grid grid = new Grid(10, 10);
         String expected = """
                   1 2 3 4 5 6 7 8 9 10
                 A - - - - - - - - - -
