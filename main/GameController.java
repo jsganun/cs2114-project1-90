@@ -5,7 +5,7 @@ import gameboard.*;
 /**
  * Entry point for the game application.
  */
-public class GameDriver {
+public class GameController {
     private static void printGrid(Grid grid) {
         System.out.println(grid.toString());
     }
