@@ -6,6 +6,7 @@ package gameboard;
 public class Shot {
     /** The cell targeted by this shot. */
     private final Cell targetCell;
+    private final boolean shotHit;
 
     /**
      * Creates a shot targeting the specified cell.
@@ -14,6 +15,7 @@ public class Shot {
      */
     public Shot(Cell targetCell) {
         this.targetCell = targetCell;
+        this.shotHit = targetCell.containsShip();
     }
 
     /**
@@ -23,5 +25,9 @@ public class Shot {
      */
     public boolean shoot() {
         return targetCell.containsShip();
+    }
+
+    public boolean shotHit() {
+        return shotHit;
     }
 }
