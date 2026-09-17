@@ -172,55 +172,6 @@ public class Grid {
         // Waiting for the implementation of shot processing logic
         return false;
     }
-    
-    /**
-     * Creates a ship at the specified grid location.
-     *
-     * @param r         the zero-based row coordinate
-     * @param c         the zero-based column coordinate
-     * @param direction the direction of the ship
-     */
-    public void createShip(int r, int c, String direction) {
-        Cell[] cells = fillShipCells(r, c, direction);
-        Ship ship = new Ship(cells);
-        for (Cell cell : cells) {
-            cell.addShip(ship);
-        }
-        ships[numShips++] = ship;
-    }
-
-    private Cell[] fillShipCells(int r, int c, String direction) {
-        // Every ship is temporarily given a fixed length of 3
-        // for ease of implementation
-        Cell[] cells = new Cell[3];
-        switch (direction.toUpperCase()) {
-
-            case "NORTH", "SOUTH" -> {
-                cells[1] = arr[r][c];
-                cells[0] = arr[r + 1][c];
-                cells[2] = arr[r - 1][c];
-            }
-            case "EAST", "WEST" -> {
-                cells[1] = arr[r][c];
-                cells[0] = arr[r][c + 1];
-                cells[2] = arr[r][c - 1];
-            }
-        }
-        return cells;
-    }
-
-    /**
-     * Fires a shot at the specified grid location and reveals a hit.
-     *
-     * @param r the zero-based row coordinate
-     * @param c the zero-based column coordinate
-     */
-    public void shoot(int r, int c) {
-        Cell target = arr[r][c];
-        Shot shot = new Shot(target);
-        boolean hit = shot.shoot();
-        target.reveal(hit);
-    }
 
     /**
      * Validates and translates a board coordinate such as {@code A1} or
