@@ -11,7 +11,7 @@ public class GameController {
         System.out.println(grid.toString());
     }
 
-    private static void printMenu(Grid grid, int currentPlayerMove) {
+    private static void printMenu(int currentPlayerMove) {
         String menu = """
                 1. Shot
                 2. Print grid
@@ -26,7 +26,7 @@ public class GameController {
         int currentPlayerMove = 1;
         while (true) {
             printGrid(grid);
-            printMenu(grid, currentPlayerMove);
+            printMenu(currentPlayerMove);
             currentPlayerMove = currentPlayerMove == 1 ? 2 : 1;
         }
     }
