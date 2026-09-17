@@ -22,7 +22,7 @@ public class GameController {
     }
 
     private static void runGame(Scanner input) {
-        Grid grid = new Grid();
+        Grid grid = new Grid(10, 10);
         int currentPlayerMove = 1;
         while (true) {
             printGrid(grid);
