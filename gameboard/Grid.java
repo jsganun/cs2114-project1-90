@@ -6,26 +6,50 @@ import ships.Ship;
  * Represents the game's fixed 10-by-10 grid of cells.
  */
 public class Grid {
+    // The amount of ships that will be placed on the grid. This is a constant value for the game.
+    private static final int SHIP_COUNT = 5;
+
     /** The cells that make up this grid. */
     private final Cell[][] arr;
     private final Ship[] ships;
+    private final int rows;
+    private final int cols;
     private int numShips;
 
-    /** Creates and initializes an empty 10-by-10 grid. */
-    public Grid() {
-        arr = new Cell[10][10];
-        fillArray();
-        ships = new Ship[5];
-        numShips = 0;
-    }
 
-    /** Initializes every grid position with a new cell. */
-    private void fillArray() {
+    /** Creates and initializes an empty grid. */
+    public Grid(int rows, int cols) {
+        this.rows = rows;
+        this.cols = cols;
+        
+        arr = new Cell[rows][cols];
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[0].length; j++) {
                 arr[i][j] = new Cell(i, j);
             }
         }
+
+        ships = new Ship[5];
+        numShips = 0;
+    }
+
+    public Cell getCell(int row, int col) {
+        if (row < 0 || row >= rows || col < 0 || col >= cols) {
+            throw new IllegalArgumentException("Invalid cell coordinates");
+        }
+        return arr[row][col];
+    }
+
+    public boolean placeShip(Ship ship, int row, int col, String direction) {
+        if (ship == null || direction == null) {
+            throw new NullPointerException("Ship and direction cannot be null");
+        }
+        if (row < 0 || row >= rows || col < 0 || col >= cols) {
+            throw new IllegalArgumentException("Invalid cell coordinates");
+        }
+
+        // Waiting for the implementation of ship placement logic based on direction and ship length
+        return false;
     }
 
     /**
