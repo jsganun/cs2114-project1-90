@@ -21,7 +21,11 @@ public class GameController {
                 + currentPlayerMove + "\n" + menu);
     }
 
-    private static void runGame(Scanner input) {
+    private static void processUserInput(Scanner input, AuditSystem log) {
+        
+    }
+
+    private static void runGame(Scanner input, AuditSystem log) {
         Grid grid = new Grid(10, 10);
         int currentPlayerMove = 1;
         while (true) {
@@ -38,6 +42,7 @@ public class GameController {
      */
     public static void main(String[] args) {
 
+        AuditSystem log = new AuditSystem();
         try (Scanner input = new Scanner(System.in)) {
             runGame(input);
         }
