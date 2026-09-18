@@ -11,7 +11,7 @@ public class GameController {
         System.out.println(grid.toString());
     }
 
-    private static void printMenu(Grid grid, int currentPlayerMove) {
+    private static void printMenu(int currentPlayerMove) {
         String menu = """
                 1. Shot
                 2. Print grid
@@ -21,12 +21,16 @@ public class GameController {
                 + currentPlayerMove + "\n" + menu);
     }
 
-    private static void runGame(Scanner input) {
+    private static void processUserInput(Scanner input, AuditSystem log) {
+
+    }
+
+    private static void runGame(Scanner input, AuditSystem log) {
         Grid grid = new Grid(10, 10);
         int currentPlayerMove = 1;
         while (true) {
             printGrid(grid);
-            printMenu(grid, currentPlayerMove);
+            printMenu(currentPlayerMove);
             currentPlayerMove = currentPlayerMove == 1 ? 2 : 1;
         }
     }
@@ -38,8 +42,9 @@ public class GameController {
      */
     public static void main(String[] args) {
 
+        AuditSystem log = new AuditSystem();
         try (Scanner input = new Scanner(System.in)) {
-            runGame(input);
+            runGame(input, log);
         }
 
     }
