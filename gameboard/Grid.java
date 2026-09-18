@@ -16,7 +16,6 @@ public class Grid {
     private final Ship[] ships;
     private final int rows;
     private final int cols;
-    private int numShips;
 
 
     /**
@@ -41,7 +40,7 @@ public class Grid {
             }
         }
 
-        ships = new Ship[5];
+        ships = new Ship[SHIP_COUNT];
         ships[0] = new Ship("Destroyer", 2);
         ships[1] = new Ship("Submarine", 3);
         ships[2] = new Ship("Cruiser", 3);
@@ -139,7 +138,9 @@ public class Grid {
                 }
 
                 break;
-            default -> throw new IllegalArgumentException("Invalid direction: " + direction);
+            default:
+                throw new IllegalArgumentException("Invalid direction: " + direction);
+                break;
         }
 
         ship.setCells(cellsToAdd);
