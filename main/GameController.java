@@ -22,7 +22,7 @@ public class GameController {
     }
 
     private static void processUserInput(Scanner input, AuditSystem log) {
-        
+
     }
 
     private static void runGame(Scanner input, AuditSystem log) {
@@ -44,7 +44,7 @@ public class GameController {
 
         AuditSystem log = new AuditSystem();
         try (Scanner input = new Scanner(System.in)) {
-            runGame(input);
+            runGame(input, log);
         }
 
     }
