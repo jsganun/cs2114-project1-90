@@ -147,6 +147,20 @@ public class Grid {
     }
 
     /**
+     * Checks if all ships on the grid have been sunk.
+     *
+     * @return true if all ships are sunk, false otherwise
+     */
+    public boolean allShipsSunk() {
+        for (Ship ship : ships) {
+            if (!ship.isSunk()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
      * Checks if the specified position is valid within the grid.
      *
      * @param row the zero-based row coordinate
