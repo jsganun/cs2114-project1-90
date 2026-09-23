@@ -6,7 +6,8 @@ import ships.Ship;
  * Represents the game's fixed 10-by-10 grid of cells.
  */
 public class Grid {
-    // The amount of ships that will be placed on the grid. This is a constant value for the game.
+    // The amount of ships that will be placed on the grid. This is a constant value
+    // for the game.
     private static final int SHIP_COUNT = 5;
 
     /** The cells that make up this grid. */
@@ -16,12 +17,11 @@ public class Grid {
     private final int cols;
     private int numShips;
 
-
     /** Creates and initializes an empty grid. */
     public Grid(int rows, int cols) {
         this.rows = rows;
         this.cols = cols;
-        
+
         arr = new Cell[rows][cols];
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[0].length; j++) {
@@ -48,7 +48,8 @@ public class Grid {
             throw new IllegalArgumentException("Invalid cell coordinates");
         }
 
-        // Waiting for the implementation of ship placement logic based on direction and ship length
+        // Waiting for the implementation of ship placement logic based on direction and
+        // ship length
         return false;
     }
 
