@@ -1,7 +1,5 @@
 package main;
 
-import gameboard.*;
-import ships.*;
 import java.util.ArrayList;
 
 public class AuditSystem {
@@ -26,6 +24,10 @@ public class AuditSystem {
 
     public void recordGameEnd() {
         list.add("Game ended");
+    }
+
+    public void recordGameWinner(int playerNum) {
+        list.add("Player " + playerNum + " won the game.");
     }
 
     /**
