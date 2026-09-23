@@ -9,13 +9,13 @@ public class AuditSystem {
         list = new ArrayList<>();
     }
 
-    public void recordShot(int row, int col, boolean hit) {
+    public void recordShot(int playerNum, int row, int col, boolean hit) {
         String shotConnectionMsg = hit ? "HIT" : "MISSED";
-        list.add("Shot at (" + row + ", " + col + "): " + shotConnectionMsg);
+        list.add("Player " + playerNum + " shot at (" + row + ", " + col + "): " + shotConnectionMsg);
     }
 
-    public void recordSink(int row, int col) {
-        list.add("Ship at (" + row + ", " + col + ") was sunk");
+    public void recordSink(int playerNum, int row, int col) {
+        list.add("Player " + playerNum + " sank a ship at (" + row + ", " + col + ")");
     }
 
     public void recordGameStart() {
