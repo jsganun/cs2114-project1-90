@@ -130,6 +130,7 @@ public class GameController {
         boolean quit = false;
         while (true) {
             currentGrid = currentPlayerMove == 1 ? player1Grid : player2Grid;
+            System.out.println(LARGE_WHITESPACE);
             printGrid(currentGrid);
             printMenu(currentPlayerMove);
             processUserInput(input, log, currentGrid, currentPlayerMove);
