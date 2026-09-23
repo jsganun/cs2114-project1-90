@@ -1,6 +1,5 @@
 package main;
 
-import gameboard.Shot;
 import java.util.ArrayList;
 
 public class AuditSystem {
@@ -10,9 +9,9 @@ public class AuditSystem {
         list = new ArrayList<>();
     }
 
-    public void recordShot(Shot shot) {
-        String shotConnectionMsg = shot.shotHit() ? "Hit" : "Missed";
-        list.add("Shot: " + shotConnectionMsg);
+    public void recordShot(int row, int col, boolean hit) {
+        String shotConnectionMsg = hit ? "HIT" : "MISSED";
+        list.add("Shot at (" + row + ", " + col + "): " + shotConnectionMsg);
     }
 
     // public recordHit(shot: Shot): void
