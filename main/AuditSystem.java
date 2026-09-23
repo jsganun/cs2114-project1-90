@@ -14,15 +14,17 @@ public class AuditSystem {
         list.add("Shot at (" + row + ", " + col + "): " + shotConnectionMsg);
     }
 
-    // public recordHit(shot: Shot): void
+    public void recordSink(int row, int col) {
+        list.add("Ship at (" + row + ", " + col + ") was sunk");
+    }
 
-    // public recordMiss(shot: Shot): void
+    public void recordGameStart() {
+        list.add("Game started");
+    }
 
-    // public recordSink(shot: Shot): void
-
-    // public recordGameStart(): void
-
-    // public recordGameEnd(): void
+    public void recordGameEnd() {
+        list.add("Game ended");
+    }
 
     public void printLog() {
         for (int i = 0; i < list.size(); i++) {
