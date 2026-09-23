@@ -22,6 +22,8 @@ public class Cell {
     private String displaySymbol;
     /** The ship occupying this cell, if any. */
     private Ship ship;
+    /** Whether this cell has been shot. */
+    private boolean shot;
 
     /**
      * Creates a hidden cell at the supplied coordinates.
@@ -34,6 +36,7 @@ public class Cell {
         this.col = col;
         this.displaySymbol = String.valueOf(HIDDEN_SYMBOL);
         this.ship = null;
+        this.shot = false;
     }
 
     /**
@@ -55,6 +58,24 @@ public class Cell {
     }
 
     /**
+     * Marks this cell as shot and reveals the hit or miss symbol
+     * depending on whether it contains a ship.
+     */
+    public void shoot() {
+        shot = true;
+        displaySymbol = containsShip() ? String.valueOf(HIT_SYMBOL) : String.valueOf(MISS_SYMBOL);
+    }
+
+    /**
+     * Determines whether this cell has been shot.
+     *
+     * @return {@code true} if the cell has been shot
+     */
+    public boolean isShot() {
+        return shot;
+    }
+    
+    /**
      * Reveals the result of a shot at this cell.
      *
      * @param hit {@code true} if the shot hit a ship; {@code false} otherwise
@@ -70,7 +91,10 @@ public class Cell {
      * @return {@code true} if the ship was accepted; {@code false} otherwise
      */
     public boolean addShip(Ship ship) {
-        if (this.ship != null || ship == null) {
+        if (ship == null) {
+            throw new NullPointerException();
+        }
+        if (this.ship != null) {
             return false;
         }
         this.ship = ship;
