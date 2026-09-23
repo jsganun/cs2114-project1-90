@@ -1,33 +1,75 @@
 package gameboard;
 
 /**
- * Represents one shot directed at a cell on the game board.
+ * Represents one shot directed at a coordinate on the game board.
  */
 public class Shot {
-    /** The cell targeted by this shot. */
-    private final Cell targetCell;
-    private final boolean shotHit;
+    /** The row that the shot is targeted at. */
+    private int row;
+    /** The column that the shot is targeted at. */
+    private int col;
+    /** The result of the shot. */
+    private ShotResult result;
 
     /**
-     * Creates a shot targeting the specified cell.
+     * Creates a shot targeting the specified coordinate.
      *
-     * @param targetCell the cell to target
+     * @param row the row to target
+     * @param col the column to target
      */
-    public Shot(Cell targetCell) {
-        this.targetCell = targetCell;
-        this.shotHit = targetCell.containsShip();
+    public Shot(int row, int col) {
+        this.row = row;
+        this.col = col;
+        this.result = ShotResult.None;
     }
 
     /**
-     * Determines whether this shot hits a ship.
+     * Returns the row that the shot is targeted at.
      *
-     * @return {@code true} if the target cell contains a ship
+     * @return the target row
      */
-    public boolean shoot() {
-        return targetCell.containsShip();
+    public int getRow() {
+        return row;
     }
 
-    public boolean shotHit() {
-        return shotHit;
+    /**
+     * Returns the column that the shot is targeted at.
+     *
+     * @return the target column
+     */
+    public int getCol() {
+        return col;
+    }
+
+    /**
+     * Returns the result of the shot.
+     *
+     * @return the shot's result
+     */
+    public ShotResult getResult() {
+        return result;
+    }
+
+    /**
+     * Sets the result of the shot.
+     *
+     * @param newResult the result to set
+     * @throws NullPointerException if {@code newResult} is null
+     */
+    public void setResult(ShotResult newResult) {
+        if (newResult == null) {
+            throw new NullPointerException("newResult cannot be null");
+        }
+        this.result = newResult;
+    }
+
+    /**
+     * Returns the shot's coordinate and its result.
+     *
+     * @return a string representation of the shot
+     */
+    @Override
+    public String toString() {
+        return "Shot(" + row + ", " + col + ") -> " + result;
     }
 }
