@@ -122,19 +122,28 @@ public class GameController {
         }
     }
 
+    private static int getWinner() {
+        if (player1ShipsSunk >= 5) {
+            return 1;
+        }
+        if (player2ShipsSunk >= 5) {
+            return 2;
+        }
+        return 0;
+    }
+
     private static void runGame(Scanner input, AuditSystem log) {
         Grid player1Grid = new Grid(10, 10);
         Grid player2Grid = new Grid(10, 10);
         Grid currentGrid;
         int currentPlayerMove = 1;
-        boolean quit = false;
         while (true) {
             currentGrid = currentPlayerMove == 1 ? player1Grid : player2Grid;
             System.out.println(LARGE_WHITESPACE);
             printGrid(currentGrid);
             printMenu(currentPlayerMove);
             processUserInput(input, log, currentGrid, currentPlayerMove);
-            if (quit) {
+            if (getWinner() > 0) {
                 break;
             }
             currentPlayerMove = currentPlayerMove == 1 ? 2 : 1;
