@@ -157,7 +157,11 @@ public class GameController {
      * @return true if the shot was processed successfully, false otherwise
      */
     private boolean shotCommand(int row, int col) {
+        if (gameOver) {
+            return false;
+        }
 
+        // TODO: Fix as this is shooting a shot at the current player's own grid instead of the opponent's grid
         Grid currPlayerGrid = playerGrids[currentPlayer - 1];
         return currPlayerGrid.receiveShot(new Shot(row, col));
     }
