@@ -250,6 +250,10 @@ public class Grid {
         return cols;
     }
 
+    public Ship[] getShips() {
+        return ships;
+    }
+
     private void appendRow(StringBuilder sb, int r) {
         char letter = (char) ('A' + r);
         int c;
