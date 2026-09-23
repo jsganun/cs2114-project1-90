@@ -88,10 +88,7 @@ public class Grid {
                 if (row - ship.getLength() + 1 < 0) {
                     return false; // Ship would go out of bounds
                 }
-
-        // Waiting for the implementation of ship placement logic based on direction and
-        // ship length
-        return false;
+                
                 for (int i = 0; i < ship.getLength(); i++) {
                     Cell cell = getCell(row - i, col);
                     if (cell.containsShip()) {
