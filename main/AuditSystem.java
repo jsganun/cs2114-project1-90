@@ -11,7 +11,7 @@ public class AuditSystem {
     }
 
     public void recordShot(Shot shot) {
-        String shotConnectionMsg = shot.shotHit() ? "Hit" : "Missed";
+        String shotConnectionMsg = (shot.getResult() == gameboard.ShotResult.Hit || shot.getResult() == gameboard.ShotResult.Sunk) ? "Hit" : "Missed";
         list.add("Shot: " + shotConnectionMsg);
     }
 
