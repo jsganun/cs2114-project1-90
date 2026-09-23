@@ -74,7 +74,7 @@ public class Cell {
     public boolean isShot() {
         return shot;
     }
-    
+
     /**
      * Reveals the result of a shot at this cell.
      *
@@ -99,6 +99,10 @@ public class Cell {
         }
         this.ship = ship;
         return true;
+    }
+
+    public Ship getShip() {
+        return ship;
     }
 
     /**

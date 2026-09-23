@@ -3,224 +3,136 @@ package main;
 import gameboard.*;
 import ships.*;
 import java.util.Scanner;
+import ships.Ship;
 
 /**
  * Entry point for the game application.
  */
 public class GameController {
-    private static Grid[] playerGrids;
-    private static AuditSystem auditSystem;
-    private static int currentPlayer;
-    private static boolean gameOver;
-
-    /**
-     * Starts the game.
-     */
-    public void startGame() {
-        currentPlayer = 1;
-        gameOver = false;
-
-        if (auditSystem == null) {
-            auditSystem = new AuditSystem();
-        }
-        else {
-            auditSystem.clearLog();
-        }
-        auditSystem.recordGameStart();
-
-        playerGrids = new Grid[2];
-        setupBoards();
-    }
-
-    /**
-     * Ends the game.
-     */
-    public void endGame(boolean byForfeit) {
-        gameOver = true;
-        auditSystem.recordGameEnd(currentPlayer, byForfeit);
-    }
-
-    /**
-     * Sets up the game boards for both players.
-     */
-    public void setupBoards() {
-        playerGrids[0] = new Grid(10, 10);
-        playerGrids[1] = new Grid(10, 10);
-
-        Ship[] player1Ships = new Ship[]{
-                new Ship("Destroyer", 2),
-                new Ship("Submarine", 3),
-                new Ship("Cruiser", 3),
-                new Ship("Battleship", 4),
-                new Ship("Carrier", 5)
-        };
-
-        Ship[] player2Ships = new Ship[]{
-                new Ship("Destroyer", 2),
-                new Ship("Submarine", 3),
-                new Ship("Cruiser", 3),
-                new Ship("Battleship", 4),
-                new Ship("Carrier", 5)
-        };
-
-        // Place ships for player 1
-        // TODO: Implement user input for ship placement instead of hardcoding positions
-        // This is where you would listen for the player's input to place ships on the grid.
-        // For demonstration purposes, we will place ships at predefined positions.
-        playerGrids[0].placeShip(player1Ships[0], 0, 0, "EAST");
-        auditSystem.recordShipPlacement(1, player1Ships[0]);
-        playerGrids[0].placeShip(player1Ships[1], 2, 0, "EAST");
-        auditSystem.recordShipPlacement(1, player1Ships[1]);
-        playerGrids[0].placeShip(player1Ships[2], 4, 0, "EAST");
-        auditSystem.recordShipPlacement(1, player1Ships[2]);
-        playerGrids[0].placeShip(player1Ships[3], 6, 0, "EAST");
-        auditSystem.recordShipPlacement(1, player1Ships[3]);
-        playerGrids[0].placeShip(player1Ships[4], 8, 0, "EAST");
-        auditSystem.recordShipPlacement(1, player1Ships[4]);
-
-        // Mark the next turn for player 2 to place their ships
-        nextTurn();
-
-        // Place ships for player 2
-        playerGrids[1].placeShip(player2Ships[0], 0, 9, "WEST");
-        auditSystem.recordShipPlacement(2, player2Ships[0]);
-        playerGrids[1].placeShip(player2Ships[1], 2, 9, "WEST");
-        auditSystem.recordShipPlacement(2, player2Ships[1]);
-        playerGrids[1].placeShip(player2Ships[2], 4, 9, "WEST");
-        auditSystem.recordShipPlacement(2, player2Ships[2]);
-        playerGrids[1].placeShip(player2Ships[3], 6, 9, "WEST");
-        auditSystem.recordShipPlacement(2, player2Ships[3]);
-        playerGrids[1].placeShip(player2Ships[4], 8, 9, "WEST");
-        auditSystem.recordShipPlacement(2, player2Ships[4]);
-
-        // Mark the next turn for player 1 to start the game
-        nextTurn();
-    }
-
-    /**
-     * Advances the game to the next turn.
-     */
-    public void nextTurn() {
-        currentPlayer = (currentPlayer == 1) ? 2 : 1;
-        auditSystem.recordTurnAdvance(currentPlayer);
-    }
-
-    /**
-     * Checks if the game has been won by either player.
-     *
-     * @return true if a player has won, false otherwise
-     */
-    public boolean checkWinCondition() {
-        Grid currPlayerGrid = playerGrids[currentPlayer - 1];
-        return currPlayerGrid.allShipsSunk();
-    }
-
-    /**
-     * Processes a command entered by the user.
-     *
-     * @param command the command to process
-     * @return true if the command was processed successfully, false otherwise
-     */
-    public boolean processCommand(String command) {
-        // TODO: Implement command processing logic
-        return false;
-    }
-
-    /**
-     * Places a ship on the specified player's grid.
-     * 
-     * @param ship the ship to place
-     * @param row the row to place the ship
-     * @param col the column to place the ship
-     * @param direction the direction to place the ship (North, South, East, West)
-     * @return true if the ship was placed successfully, false otherwise
-     */
-    private boolean placeShipCommand(Ship ship, int row, int col, String direction) {
-        direction = direction.toUpperCase();
-
-        if (ship == null) {
-            return false;
-        }
-        if (!direction.equals("NORTH") && !direction.equals("SOUTH") && !direction.equals("EAST") && !direction.equals("WEST")) {
-            return false;
-        }
-
-        Grid currPlayerGrid = playerGrids[currentPlayer - 1];
-        return currPlayerGrid.placeShip(ship, row, col, direction);
-    }
-
-    /**
-     * Processes a shot command for the specified player at the given coordinates.
-     * 
-     * @param row the row to target
-     * @param col the column to target
-     * @return true if the shot was processed successfully, false otherwise
-     */
-    private boolean shotCommand(int row, int col) {
-        if (gameOver) {
-            return false;
-        }
-
-        // TODO: Fix as this is shooting a shot at the current player's own grid instead of the opponent's grid
-        Grid currPlayerGrid = playerGrids[currentPlayer - 1];
-        return currPlayerGrid.receiveShot(new Shot(row, col));
-    }
-
-    /**
-     * Processes a forfeit command for the specified player.
-     * 
-     * @param player the player number (1 or 2)
-     * @return true if the forfeit was processed successfully, false otherwise
-     */
-    private boolean forfeitCommand() {
-        if (gameOver) {
-            return false;
-        }
-
-        endGame(true);
-        return true;
-    }
-
-    /**
-     * Processes a start game command.
-     * 
-     * @return true if the game was started successfully, false otherwise
-     */
-    private boolean startGameCommand() {
-        if (!gameOver) {
-            return false;
-        }
-
-        startGame();
-        return true;
-    }
+    private static final String LARGE_WHITESPACE = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
 
     private static void printGrid(Grid grid) {
-        System.out.println(grid.toString());
+        System.out.print(grid.toString());
     }
 
     private static void printMenu(int currentPlayerMove) {
         String menu = """
-                1. Shot
+                0. Quit
+                1. Shoot
                 2. Print grid
-                3. Print log
+                3. Print menu
+                4. Print log
                 """;
-        System.out.println("Current move: Player"
-                + currentPlayerMove + "\n" + menu);
+        String separator = "--------------------------";
+        System.out.println(separator + "\nCurrent move: Player "
+                + currentPlayerMove + "\n" + menu + separator);
     }
 
-    private static void processUserInput(Scanner input, AuditSystem log) {
+    private static int parseNumber(String in) {
+        int testInt = -1;
+        try {
+            Double.valueOf(in);
+        } catch (NumberFormatException e) {
+            // This is good. The user did not input a double.
+            // No action needed here.
+        }
+        try {
+            testInt = Integer.parseInt(in);
+        } catch (NumberFormatException e) {
+            // This is bad. The user did not input an int.
+        }
+        return testInt;
+    }
 
+    private static void processShotInput(Scanner input, AuditSystem log, Grid grid, int currentPlayerMove) {
+        String in;
+        int row = -1;
+        int col = -1;
+        while (true) {
+            System.out.println("Please enter the row:");
+            in = input.nextLine();
+            row = parseNumber(in);
+            if (row > -1) {
+                break;
+            }
+        }
+        while (true) {
+            System.out.println("Please enter the column:");
+            in = input.nextLine();
+            col = parseNumber(in);
+            if (col > -1) {
+                break;
+            }
+        }
+        Cell cell = grid.getCell(row, col);
+        boolean hit = cell.containsShip();
+        log.recordShot(currentPlayerMove, row, col, hit);
+        if (hit) {
+            System.out.println("You hit a ship!");
+        } else {
+            System.out.println("You missed.");
+        }
+        Ship ship = cell.getShip();
+        boolean isSunk = ship != null && ship.isSunk();
+        if (isSunk) {
+            log.recordSink(currentPlayerMove, row, col);
+            System.out.println("You sank a ship!");
+        }
+    }
+
+    private static void processUserInput(Scanner input, AuditSystem log, Grid grid, int currentPlayerMove) {
+        String in;
+        int num;
+        while (true) {
+            System.out.println("Please enter a number:");
+            in = input.nextLine();
+            num = parseNumber(in);
+            if (num == -1) {
+                continue;
+            }
+            switch (num) {
+                case 0 -> {
+                    System.out.println("Quitting...");
+                    log.recordGameEnd();
+                    System.exit(0);
+                }
+                case 1 -> {
+                    processShotInput(input, log, grid, currentPlayerMove);
+                }
+                case 2 -> {
+                    printGrid(grid);
+                    continue;
+                }
+                case 3 -> {
+                    printMenu(currentPlayerMove);
+                    continue;
+                }
+                case 4 -> {
+                    log.printLog();
+                    continue;
+                }
+            }
+            break;
+        }
     }
 
     private static void runGame(Scanner input, AuditSystem log) {
-        Grid grid = new Grid(10, 10);
+        Grid player1Grid = new Grid(10, 10);
+        Grid player2Grid = new Grid(10, 10);
+        Grid currentGrid;
         int currentPlayerMove = 1;
+        boolean quit = false;
         while (true) {
-            printGrid(grid);
+            currentGrid = currentPlayerMove == 1 ? player1Grid : player2Grid;
+            printGrid(currentGrid);
             printMenu(currentPlayerMove);
+            processUserInput(input, log, currentGrid, currentPlayerMove);
+            if (quit) {
+                break;
+            }
             currentPlayerMove = currentPlayerMove == 1 ? 2 : 1;
         }
+        log.recordGameEnd();
     }
 
     /**
@@ -229,9 +141,11 @@ public class GameController {
      * @param args command-line arguments
      */
     public static void main(String[] args) {
-
         AuditSystem log = new AuditSystem();
         try (Scanner input = new Scanner(System.in)) {
+            System.out.println("Press any key to start the game: ");
+            input.nextLine();
+            log.recordGameStart();
             runGame(input, log);
         }
 
