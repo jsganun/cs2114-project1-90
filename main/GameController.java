@@ -2,6 +2,7 @@ package main;
 
 import gameboard.*;
 import java.util.Scanner;
+import ships.Ship;
 
 /**
  * Entry point for the game application.
@@ -18,7 +19,8 @@ public class GameController {
                 0. Quit
                 1. Shoot
                 2. Print grid
-                3. Print log
+                3. Print menu
+                4. Print log
                 """;
         String separator = "--------------------------";
         System.out.println(separator + "\nCurrent move: Player "
@@ -26,10 +28,9 @@ public class GameController {
     }
 
     private static int parseNumber(String in) {
-        int testInt;
+        int testInt = -1;
         try {
             Double.valueOf(in);
-            return -1;
         } catch (NumberFormatException e) {
             // This is good. The user did not input a double.
             // No action needed here.
@@ -37,12 +38,12 @@ public class GameController {
         try {
             testInt = Integer.parseInt(in);
         } catch (NumberFormatException e) {
-            return -1; // This is bad. The user did not input an int.
+            // This is bad. The user did not input an int.
         }
         return testInt;
     }
 
-    private static void processShotInput(Scanner input, AuditSystem log, Grid grid) {
+    private static void processShotInput(Scanner input, AuditSystem log, Grid grid, int currentPlayerMove) {
         String in;
         int row = -1;
         int col = -1;
@@ -62,36 +63,75 @@ public class GameController {
                 break;
             }
         }
-        boolean hit = true; // temp
-        log.recordShot(row, col, hit);
+        Cell cell = grid.getCell(row, col);
+        boolean hit = cell.containsShip();
+        log.recordShot(currentPlayerMove, row, col, hit);
+        if (hit) {
+            System.out.println("You hit a ship!");
+        } else {
+            System.out.println("You missed.");
+        }
+        Ship ship = cell.getShip();
+        boolean isSunk = ship != null && ship.isSunk();
+        if (isSunk) {
+            log.recordSink(currentPlayerMove, row, col);
+            System.out.println("You sank a ship!");
+        }
     }
 
-    private static void processUserInput(Scanner input, AuditSystem log, Grid grid) {
-        String in = input.nextLine();
-        int num = -1;
-        while (num == -1 || num > 3) {
-            System.out.println("Please enter a number: ");
+    private static void processUserInput(Scanner input, AuditSystem log, Grid grid, int currentPlayerMove) {
+        String in;
+        int num;
+        while (true) {
+            System.out.println("Please enter a number:");
+            in = input.nextLine();
             num = parseNumber(in);
-        }
-        switch (num) {
-            case 0 -> {
-                System.out.println("Quitting...");
-                System.exit(0);
+            if (num == -1) {
+                continue;
             }
-            case 1 -> {
-                processShotInput(input, log, grid);
+            switch (num) {
+                case 0 -> {
+                    System.out.println("Quitting...");
+                    log.recordGameEnd();
+                    System.exit(0);
+                }
+                case 1 -> {
+                    processShotInput(input, log, grid, currentPlayerMove);
+                }
+                case 2 -> {
+                    printGrid(grid);
+                    continue;
+                }
+                case 3 -> {
+                    printMenu(currentPlayerMove);
+                    continue;
+                }
+                case 4 -> {
+                    log.printLog();
+                    continue;
+                }
             }
+            break;
         }
     }
 
     private static void runGame(Scanner input, AuditSystem log) {
-        Grid grid = new Grid(10, 10);
+        Grid player1Grid = new Grid(10, 10);
+        Grid player2Grid = new Grid(10, 10);
+        Grid currentGrid;
         int currentPlayerMove = 1;
+        boolean quit = false;
         while (true) {
-            printGrid(grid);
-            printMenu(1);
-            processUserInput(input, log, grid);
+            currentGrid = currentPlayerMove == 1 ? player1Grid : player2Grid;
+            printGrid(currentGrid);
+            printMenu(currentPlayerMove);
+            processUserInput(input, log, currentGrid, currentPlayerMove);
+            if (quit) {
+                break;
+            }
+            currentPlayerMove = currentPlayerMove == 1 ? 2 : 1;
         }
+        log.recordGameEnd();
     }
 
     /**
@@ -102,6 +142,9 @@ public class GameController {
     public static void main(String[] args) {
         AuditSystem log = new AuditSystem();
         try (Scanner input = new Scanner(System.in)) {
+            System.out.println("Press any key to start the game: ");
+            input.nextLine();
+            log.recordGameStart();
             runGame(input, log);
         }
 
