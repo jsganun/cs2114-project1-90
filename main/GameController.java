@@ -143,7 +143,10 @@ public class GameController {
             printGrid(currentGrid);
             printMenu(currentPlayerMove);
             processUserInput(input, log, currentGrid, currentPlayerMove);
-            if (getWinner() > 0) {
+            int winner = getWinner();
+            if (winner > 0) {
+                System.out.println("Player " + winner + " won the game!");
+                log.recordGameWinner(winner);
                 break;
             }
             currentPlayerMove = currentPlayerMove == 1 ? 2 : 1;
