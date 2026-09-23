@@ -70,7 +70,10 @@ public class Cell {
      * @return {@code true} if the ship was accepted; {@code false} otherwise
      */
     public boolean addShip(Ship ship) {
-        if (this.ship != null || ship == null) {
+        if (ship == null) {
+            throw new NullPointerException();
+        }
+        if (this.ship != null) {
             return false;
         }
         this.ship = ship;
