@@ -140,7 +140,6 @@ public class Grid {
                 break;
             default:
                 throw new IllegalArgumentException("Invalid direction: " + direction);
-                break;
         }
 
         ship.setCells(cellsToAdd);
