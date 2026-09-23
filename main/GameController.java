@@ -1,6 +1,7 @@
 package main;
 
 import gameboard.*;
+import ships.*;
 import java.util.Scanner;
 import ships.Ship;
 

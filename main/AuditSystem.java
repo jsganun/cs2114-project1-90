@@ -1,5 +1,7 @@
 package main;
 
+import gameboard.*;
+import ships.*;
 import java.util.ArrayList;
 
 public class AuditSystem {
@@ -26,12 +28,18 @@ public class AuditSystem {
         list.add("Game ended");
     }
 
+    /**
+     * Prints the audit log.
+     */
     public void printLog() {
         for (int i = 0; i < list.size(); i++) {
             System.out.println(i + ". " + list.get(i));
         }
     }
 
+    /**
+     * Clears the audit log.
+     */
     public void clearLog() {
         list = new ArrayList<>();
     }

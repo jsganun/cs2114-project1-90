@@ -88,17 +88,14 @@ public class Grid {
                 if (row - ship.getLength() + 1 < 0) {
                     return false; // Ship would go out of bounds
                 }
-
-                // Waiting for the implementation of ship placement logic based on direction and
-                // ship length
-                // return false;
-                // for (int i = 0; i < ship.getLength(); i++) {
-                // Cell cell = getCell(row - i, col);
-                // if (cell.containsShip()) {
-                // return false; // Cell already occupied by another ship
-                // }
-                // cellsToAdd[i] = cell;
-                // }
+                
+                for (int i = 0; i < ship.getLength(); i++) {
+                    Cell cell = getCell(row - i, col);
+                    if (cell.containsShip()) {
+                        return false; // Cell already occupied by another ship
+                    }
+                    cellsToAdd[i] = cell;
+                }
 
                 // break;
             case "SOUTH":
@@ -148,6 +145,20 @@ public class Grid {
         }
 
         ship.setCells(cellsToAdd);
+        return true;
+    }
+
+    /**
+     * Checks if all ships on the grid have been sunk.
+     *
+     * @return true if all ships are sunk, false otherwise
+     */
+    public boolean allShipsSunk() {
+        for (Ship ship : ships) {
+            if (!ship.isSunk()) {
+                return false;
+            }
+        }
         return true;
     }
 
