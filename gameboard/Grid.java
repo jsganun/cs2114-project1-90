@@ -6,7 +6,8 @@ import ships.Ship;
  * Represents the game's fixed 10-by-10 grid of cells.
  */
 public class Grid {
-    // The amount of ships that will be placed on the grid. This is a constant value for the game.
+    // The amount of ships that will be placed on the grid. This is a constant value
+    // for the game.
     private static final int SHIP_COUNT = 5;
     private static final int MAX_ROWS = 24;
     private static final int MAX_COLS = 24;
@@ -17,6 +18,7 @@ public class Grid {
     private final int rows;
     private final int cols;
 
+    /** Creates and initializes an empty grid. */
 
     /**
      * Creates a grid with the specified number of rows and columns.
@@ -87,6 +89,9 @@ public class Grid {
                     return false; // Ship would go out of bounds
                 }
 
+        // Waiting for the implementation of ship placement logic based on direction and
+        // ship length
+        return false;
                 for (int i = 0; i < ship.getLength(); i++) {
                     Cell cell = getCell(row - i, col);
                     if (cell.containsShip()) {
