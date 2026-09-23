@@ -1,7 +1,6 @@
 package main;
 
 import gameboard.*;
-import ships.*;
 import java.util.Scanner;
 import ships.Ship;
 
@@ -10,6 +9,8 @@ import ships.Ship;
  */
 public class GameController {
     private static final String LARGE_WHITESPACE = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+    private static int player1ShipsSunk = 0;
+    private static int player2ShipsSunk = 0;
 
     private static void printGrid(Grid grid) {
         System.out.print(grid.toString());
@@ -77,6 +78,11 @@ public class GameController {
         if (isSunk) {
             log.recordSink(currentPlayerMove, row, col);
             System.out.println("You sank a ship!");
+            if (currentPlayerMove == 1) {
+                player1ShipsSunk++;
+            } else {
+                player2ShipsSunk++;
+            }
         }
     }
 
