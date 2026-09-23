@@ -88,7 +88,7 @@ public class Grid {
                 if (row - ship.getLength() + 1 < 0) {
                     return false; // Ship would go out of bounds
                 }
-                
+
                 for (int i = 0; i < ship.getLength(); i++) {
                     Cell cell = getCell(row - i, col);
                     if (cell.containsShip()) {
@@ -240,6 +240,14 @@ public class Grid {
         } catch (NumberFormatException e) {
             return false;
         }
+    }
+
+    public int getRows() {
+        return rows;
+    }
+
+    public int getCols() {
+        return cols;
     }
 
     private void appendRow(StringBuilder sb, int r) {
