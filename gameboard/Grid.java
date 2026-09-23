@@ -68,9 +68,9 @@ public class Grid {
     /**
      * Places a ship on the grid at the specified position and direction.
      *
-     * @param ship the ship to place
-     * @param row the zero-based row coordinate
-     * @param col the zero-based column coordinate
+     * @param ship      the ship to place
+     * @param row       the zero-based row coordinate
+     * @param col       the zero-based column coordinate
      * @param direction the direction in which to place the ship
      * @return true if the ship was placed successfully, false otherwise
      */
@@ -81,7 +81,7 @@ public class Grid {
         if (!isValidPosition(row, col)) {
             throw new IllegalArgumentException("Invalid cell coordinates");
         }
-        
+
         Cell[] cellsToAdd = new Cell[ship.getLength()];
         switch (direction.toUpperCase()) {
             case "NORTH":
@@ -89,18 +89,18 @@ public class Grid {
                     return false; // Ship would go out of bounds
                 }
 
-        // Waiting for the implementation of ship placement logic based on direction and
-        // ship length
-        return false;
-                for (int i = 0; i < ship.getLength(); i++) {
-                    Cell cell = getCell(row - i, col);
-                    if (cell.containsShip()) {
-                        return false; // Cell already occupied by another ship
-                    }
-                    cellsToAdd[i] = cell;
-                }
+                // Waiting for the implementation of ship placement logic based on direction and
+                // ship length
+                // return false;
+                // for (int i = 0; i < ship.getLength(); i++) {
+                // Cell cell = getCell(row - i, col);
+                // if (cell.containsShip()) {
+                // return false; // Cell already occupied by another ship
+                // }
+                // cellsToAdd[i] = cell;
+                // }
 
-                break;
+                // break;
             case "SOUTH":
                 if (row + ship.getLength() - 1 >= rows) {
                     return false; // Ship would go out of bounds
@@ -127,7 +127,7 @@ public class Grid {
                     }
                     cellsToAdd[i] = cell;
                 }
-                
+
                 break;
             case "WEST":
                 if (col - ship.getLength() + 1 < 0) {
