@@ -84,7 +84,7 @@ public class Grid {
 
         Cell[] cellsToAdd = new Cell[ship.getLength()];
         switch (direction.toUpperCase()) {
-            case "NORTH":
+            case "NORTH" -> {
                 if (row - ship.getLength() + 1 < 0) {
                     return false; // Ship would go out of bounds
                 }
@@ -96,9 +96,8 @@ public class Grid {
                     }
                     cellsToAdd[i] = cell;
                 }
-
-                break;
-            case "SOUTH":
+            }
+            case "SOUTH" -> {
                 if (row + ship.getLength() - 1 >= rows) {
                     return false; // Ship would go out of bounds
                 }
@@ -110,9 +109,8 @@ public class Grid {
                     }
                     cellsToAdd[i] = cell;
                 }
-
-                break;
-            case "EAST":
+            }
+            case "EAST" -> {
                 if (col + ship.getLength() - 1 >= cols) {
                     return false; // Ship would go out of bounds
                 }
@@ -124,9 +122,8 @@ public class Grid {
                     }
                     cellsToAdd[i] = cell;
                 }
-
-                break;
-            case "WEST":
+            }
+            case "WEST" -> {
                 if (col - ship.getLength() + 1 < 0) {
                     return false; // Ship would go out of bounds
                 }
@@ -138,10 +135,8 @@ public class Grid {
                     }
                     cellsToAdd[i] = cell;
                 }
-
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid direction: " + direction);
+            }
+            default -> throw new IllegalArgumentException("Invalid direction: " + direction);
         }
 
         ship.setCells(cellsToAdd);
