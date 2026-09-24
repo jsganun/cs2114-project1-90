@@ -1,1 +1,19 @@
-# How to Compile
+# How to Compile and Run
+
+Make sure the Java Development Kit (JDK) is installed. Open Command Prompt and navigate to the folder containing the `.java` file by running this command:
+
+```cmd
+cd /d "C:\InsertFolderNameHere"
+```
+
+Compile the program by running this command:
+
+```cmd
+javac GameController.java
+```
+
+Run the program using the class name without `.java`:
+
+```cmd
+java GameController
+```
