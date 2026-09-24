@@ -263,6 +263,25 @@ public class GameController {
         log.recordGameEnd();
     }
 
+    private static boolean willPlayAnotherGame(Scanner input) {
+        String in;
+        while (true) {
+            System.out.println("Would you like to play another game? (Y/N)");
+            in = input.nextLine();
+            switch (in.toUpperCase()) {
+                case "Y", "YES" -> {
+                    return true;
+                }
+                case "N", "NO" -> {
+                    return false;
+                }
+                default -> {
+                    // Continue because it is an invalid input
+                }
+            }
+        }
+    }
+
     /**
      * Starts the game application.
      *
@@ -276,25 +295,7 @@ public class GameController {
                 input.nextLine();
                 log.recordGameStart();
                 runGame(input, log);
-                String in;
-                boolean cont;
-                while (true) {
-                    System.out.println("Would you like to play another game? (Y/N)");
-                    in = input.nextLine();
-                    switch (in.toUpperCase()) {
-                        case "Y", "YES" -> {
-                            cont = true;
-                        }
-                        case "N", "NO" -> {
-                            cont = false;
-                        }
-                        default -> {
-                            continue;
-                        }
-                    }
-                    break;
-                }
-                if (!cont) {
+                if (!willPlayAnotherGame(input)) {
                     break;
                 }
                 System.out.println("Starting another game!");
