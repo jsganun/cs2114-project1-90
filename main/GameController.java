@@ -134,10 +134,10 @@ public class GameController {
         String in;
         int num;
         while (true) {
-            System.out.println("Please enter a number:");
+            System.out.println("Please enter a number 1-4:");
             in = input.nextLine();
             num = parseNumber(in);
-            if (num == -1) {
+            if (num < 0 || num > 4) {
                 continue;
             }
             switch (num) {
