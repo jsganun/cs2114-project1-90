@@ -158,7 +158,9 @@ public class GameController {
                     processShotInput(input, log, grid, currentPlayerMove);
                 }
                 case 2 -> {
+                    System.out.println(SEPARATOR);
                     printGrid(grid);
+                    System.out.println(SEPARATOR);
                     continue;
                 }
                 case 3 -> {
@@ -166,7 +168,9 @@ public class GameController {
                     continue;
                 }
                 case 4 -> {
+                    System.out.println(SEPARATOR);
                     log.printLog();
+                    System.out.println(SEPARATOR);
                     continue;
                 }
             }
