@@ -9,7 +9,6 @@ import ships.Ship;
  * Entry point for the game application.
  */
 public class GameController {
-    private static final String LARGE_WHITESPACE = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
     private static final Random RANDOM = new Random();
     private static int player1ShipsSunk = 0;
     private static int player2ShipsSunk = 0;
@@ -241,7 +240,6 @@ public class GameController {
         placeShipsRandomly(player2Grid);
         while (true) {
             currentGrid = currentPlayerMove == 1 ? player2Grid : player1Grid; // Players shoot at the opponent's grid!
-            System.out.println(LARGE_WHITESPACE);
             printGrid(currentGrid);
             printMenu(currentPlayerMove);
             processUserInput(input, log, currentGrid, currentPlayerMove);
