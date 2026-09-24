@@ -97,6 +97,11 @@ public class GameController {
         Cell cell = grid.getCell(row, col);
         boolean hit = cell.containsShip();
         cell.shoot();
+        processShotResult(log, currentPlayerMove, row, col, hit, cell);
+    }
+
+    private static void processShotResult(AuditSystem log, int currentPlayerMove, int row, int col, boolean hit,
+            Cell cell) {
         log.recordShot(currentPlayerMove, row, col, hit);
         if (hit) {
             System.out.println("You hit a ship!");
@@ -109,13 +114,17 @@ public class GameController {
         }
         boolean isSunk = ship != null && ship.isSunk();
         if (isSunk) {
-            log.recordSink(currentPlayerMove, row, col);
-            System.out.println("You sank a ship!");
-            if (currentPlayerMove == 1) {
-                player1ShipsSunk++;
-            } else {
-                player2ShipsSunk++;
-            }
+            processSink(log, currentPlayerMove, row, col);
+        }
+    }
+
+    private static void processSink(AuditSystem log, int currentPlayerMove, int row, int col) {
+        log.recordSink(currentPlayerMove, row, col);
+        System.out.println("You sank a ship!");
+        if (currentPlayerMove == 1) {
+            player1ShipsSunk++;
+        } else {
+            player2ShipsSunk++;
         }
     }
 
