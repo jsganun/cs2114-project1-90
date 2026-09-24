@@ -101,8 +101,8 @@ public class Ship {
             throw new NullPointerException("Cell cannot be null.");
         }
         if (cells != null) {
-            for (int i = 0; i < cells.length; i++) {
-                if (cells[i] != null && cells[i].equals(cell)) {
+            for (Cell curr : cells) {
+                if (curr != null && curr.equals(cell)) {
                     return true;
                 }
             }
@@ -117,8 +117,8 @@ public class Ship {
     public void registerHit() {
         int hits = 0;
         if (cells != null) {
-            for (int i = 0; i < cells.length; i++) {
-                if (cells[i] != null && cells[i].toString().equals("X")) {
+            for (Cell cell : cells) {
+                if (cell != null && cell.toString().equals("X")) {
                     hits++;
                 }
             }
