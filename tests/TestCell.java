@@ -113,4 +113,80 @@ public class TestCell {
         cell.shoot();
         assertEquals("O", cell.toString());
     }
+
+    /**
+     * Tests the reveal method with a hit.
+     */
+    @Test
+    public void testRevealHit() {
+        cell.reveal(true);
+        assertEquals("X", cell.toString());
+    }
+
+    /**
+     * Tests the reveal method with a miss.
+     */
+    @Test
+    public void testRevealMiss() {
+        cell.reveal(false);
+        assertEquals("O", cell.toString());
+    }
+
+    /**
+     * Tests retrieving the ship from a cell.
+     */
+    @Test
+    public void testGetShip() {
+        assertNull(cell.getShip());
+
+        cell.addShip(ship);
+        assertNotNull(cell.getShip());
+        assertEquals(ship, cell.getShip());
+    }
+
+    /**
+     * Tests the equals method with the same cell coordinates.
+     */
+    @Test
+    public void testEqualsTrue() {
+        Cell cell2 = new Cell(2, 3);
+        assertTrue(cell.equals(cell2));
+    }
+
+    /**
+     * Tests the equals method with different cell coordinates.
+     */
+    @Test
+    public void testEqualsFalse() {
+        Cell cell2 = new Cell(2, 4);
+        assertFalse(cell.equals(cell2));
+
+        Cell cell3 = new Cell(3, 3);
+        assertFalse(cell.equals(cell3));
+    }
+
+    /**
+     * Tests the equals method with null.
+     */
+    @Test
+    public void testEqualsNull() {
+        assertFalse(cell.equals(null));
+    }
+
+    /**
+     * Tests the equals method with a different object type.
+     */
+    @Test
+    public void testEqualsDifferentType() {
+        assertFalse(cell.equals("not a cell"));
+        assertFalse(cell.equals(5));
+    }
+
+    /**
+     * Tests the equals method with the same object instance.
+     */
+    @Test
+    public void testEqualsSameInstance() {
+        assertTrue(cell.equals(cell));
+    }
 }
