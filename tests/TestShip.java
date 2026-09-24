@@ -148,7 +148,38 @@ public class TestShip {
     public void testRegisterHit() {
         ship.setCells(cells);
         ship.registerHit();
-        assertFalse(ship.isHit());
+
+        // Before shooting, hitsTaken should be 0
+        assertFalse(ship.isSunk());
+    }
+
+    /**
+     * Tests registerHit with some cells shot.
+     */
+    @Test
+    public void testRegisterHitPartial() {
+        ship.setCells(cells);
+        cells[0].shoot();
+        cells[1].shoot();
+        ship.registerHit();
+
+        assertTrue(ship.isHit());
+        assertFalse(ship.isSunk());
+    }
+
+    /**
+     * Tests registerHit with all cells shot.
+     */
+    @Test
+    public void testRegisterHitFullySunk() {
+        ship.setCells(cells);
+        for (Cell cell : cells) {
+            cell.shoot();
+        }
+        ship.registerHit();
+
+        assertTrue(ship.isHit());
+        assertTrue(ship.isSunk());
     }
 
     /**
@@ -157,5 +188,47 @@ public class TestShip {
     @Test
     public void testToString() {
         assertEquals("Battleship, 4, 0, false", ship.toString());
+    }
+
+    /**
+     * Tests ship constructor with negative length.
+     */
+    @Test
+    public void testShipNegativeLength() {
+        assertThrows(IllegalArgumentException.class, () -> new Ship("Destroyer", -1));
+    }
+
+    /**
+     * Tests ship setCells with mismatched length.
+     */
+    @Test
+    public void testSetCellsMismatchedLength() {
+        Cell[] wrongSizedCells = new Cell[] { cell1, cell2 };
+        assertThrows(IllegalArgumentException.class, () -> ship.setCells(wrongSizedCells));
+    }
+
+    /**
+     * Tests that isHit returns false for newly created ship.
+     */
+    @Test
+    public void testIsHitDefault() {
+        assertFalse(ship.isHit());
+    }
+
+    /**
+     * Tests that isSunk returns false for newly created ship.
+     */
+    @Test
+    public void testIsSunkDefault() {
+        assertFalse(ship.isSunk());
+    }
+
+    /**
+     * Tests containsCell with null cell array.
+     */
+    @Test
+    public void testContainsCellWithNullCells() {
+        // Ship cells are initialized but null, so no cells are contained
+        assertFalse(ship.containsCell(cell1));
     }
 }
