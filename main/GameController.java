@@ -12,6 +12,7 @@ public class GameController {
     private static final Random RANDOM = new Random();
     private static int player1ShipsSunk = 0;
     private static int player2ShipsSunk = 0;
+    private static final String SEPARATOR = "--------------------------";
 
     /**
      * Prints the game grid to standard output.
@@ -35,9 +36,8 @@ public class GameController {
                 3. Print menu
                 4. Print log
                 """;
-        String separator = "--------------------------";
-        System.out.println(separator + "\nCurrent move: Player "
-                + currentPlayerMove + "\n" + menu + separator);
+        System.out.println(SEPARATOR + "\nCurrent move: Player "
+                + currentPlayerMove + "\n" + menu + SEPARATOR);
     }
 
     /**
