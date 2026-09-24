@@ -1,7 +1,7 @@
 package tests;
 
-import org.junit.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
 import gameboard.Grid;
@@ -95,16 +95,20 @@ public class TestGrid {
     @Test
     public void testPlaceShipAllDirections() {
         Ship north = new Ship("Destroyer", 2);
-        assertTrue(grid.placeShip(north, 2, 0, "NORTH"));
+        boolean northResult = grid.placeShip(north, 2, 0, "NORTH");
+        assertTrue(northResult);
 
         Ship south = new Ship("Submarine", 3);
-        assertTrue(grid.placeShip(south, 0, 3, "SOUTH"));
+        boolean southResult = grid.placeShip(south, 5, 3, "SOUTH");
+        assertTrue(southResult);
 
         Ship east = new Ship("Cruiser", 3);
-        assertTrue(grid.placeShip(east, 0, 5, "EAST"));
+        boolean eastResult = grid.placeShip(east, 0, 1, "EAST");
+        assertTrue(eastResult);
 
         Ship west = new Ship("Battleship", 4);
-        assertTrue(grid.placeShip(west, 0, 9, "WEST"));
+        boolean westResult = grid.placeShip(west, 3, 9, "WEST");
+        assertTrue(westResult);
     }
 
     /**
@@ -158,7 +162,9 @@ public class TestGrid {
                 cells[i] = new Cell(i, i);
             }
             ship.setCells(cells);
+            // Add ship to cells so they register as hits when shot
             for (Cell cell : cells) {
+                cell.addShip(ship);
                 cell.shoot();
             }
             ship.registerHit();
