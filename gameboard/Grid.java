@@ -245,14 +245,29 @@ public class Grid {
         }
     }
 
+    /**
+     * Returns the number of rows in the grid.
+     * 
+     * @return the number of rows
+     */
     public int getRows() {
         return rows;
     }
 
+    /**
+     * Returns the number of columns in the grid.
+     * 
+     * @return the number of columns
+     */
     public int getCols() {
         return cols;
     }
 
+    /**
+     * Returns the ships on the grid.
+     *
+     * @return an array of ships
+     */
     public Ship[] getShips() {
         return ships;
     }
