@@ -11,13 +11,11 @@ import main.AuditSystem;
 public class TestAuditLog {
     private AuditSystem auditSystem;
     private ByteArrayOutputStream outputStream;
-    private PrintStream originalOut;
 
     @BeforeEach
     public void setUp() {
         auditSystem = new AuditSystem();
         outputStream = new ByteArrayOutputStream();
-        originalOut = System.out;
         System.setOut(new PrintStream(outputStream));
     }
 
