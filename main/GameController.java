@@ -263,6 +263,25 @@ public class GameController {
         log.recordGameEnd();
     }
 
+    private static boolean willPlayAnotherGame(Scanner input) {
+        String in;
+        while (true) {
+            System.out.println("Would you like to play another game? (Y/N)");
+            in = input.nextLine();
+            switch (in.toUpperCase()) {
+                case "Y", "YES" -> {
+                    return true;
+                }
+                case "N", "NO" -> {
+                    return false;
+                }
+                default -> {
+                    // Continue because it is an invalid input
+                }
+            }
+        }
+    }
+
     /**
      * Starts the game application.
      *
@@ -271,10 +290,17 @@ public class GameController {
     public static void main(String[] args) {
         AuditSystem log = new AuditSystem();
         try (Scanner input = new Scanner(System.in)) {
-            System.out.println("Press any key to start the game: ");
-            input.nextLine();
-            log.recordGameStart();
-            runGame(input, log);
+            while (true) {
+                System.out.println("Press any key to start the game: ");
+                input.nextLine();
+                log.recordGameStart();
+                runGame(input, log);
+                if (!willPlayAnotherGame(input)) {
+                    break;
+                }
+                System.out.println("Starting another game!");
+            }
+            System.out.println("Session finished!");
         }
 
     }
