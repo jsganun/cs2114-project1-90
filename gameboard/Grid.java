@@ -97,7 +97,7 @@ public class Grid {
                     cellsToAdd[i] = cell;
                 }
 
-                // break;
+                break;
             case "SOUTH":
                 if (row + ship.getLength() - 1 >= rows) {
                     return false; // Ship would go out of bounds
@@ -145,6 +145,9 @@ public class Grid {
         }
 
         ship.setCells(cellsToAdd);
+        for (Cell cell : cellsToAdd) {
+            cell.addShip(ship);
+        }
         return true;
     }
 
