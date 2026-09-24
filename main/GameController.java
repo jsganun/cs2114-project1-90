@@ -14,10 +14,20 @@ public class GameController {
     private static int player1ShipsSunk = 0;
     private static int player2ShipsSunk = 0;
 
+    /**
+     * Prints the game grid to standard output.
+     *
+     * @param grid the grid to print
+     */
     private static void printGrid(Grid grid) {
         System.out.print(grid.toString());
     }
 
+    /**
+     * Prints the game menu and current player information to standard output.
+     *
+     * @param currentPlayerMove the player number (1 or 2) whose turn it is
+     */
     private static void printMenu(int currentPlayerMove) {
         String menu = """
                 0. Quit
@@ -31,6 +41,15 @@ public class GameController {
                 + currentPlayerMove + "\n" + menu + separator);
     }
 
+    /**
+     * Parses a string input as an integer.
+     * Rejects input containing floating-point numbers and returns -1 for invalid
+     * input.
+     *
+     * @param in the string to parse
+     * @return the parsed integer, or -1 if the input is invalid or a floating-point
+     *         number
+     */
     private static int parseNumber(String in) {
         int testInt = -1;
         try {
@@ -47,6 +66,19 @@ public class GameController {
         return testInt;
     }
 
+    /**
+     * Processes a player's shot input, validating coordinates and recording the
+     * result.
+     * Prompts for row and column input, determines if the shot hit, and logs the
+     * result.
+     * If a ship is sunk, increments the player's sink counter and logs the sunk
+     * ship.
+     *
+     * @param input             the Scanner for reading player input
+     * @param log               the AuditSystem for recording the shot
+     * @param grid              the game grid to shoot at
+     * @param currentPlayerMove the player number (1 or 2) making the shot
+     */
     private static void processShotInput(Scanner input, AuditSystem log, Grid grid, int currentPlayerMove) {
         String in;
         int row = -1;
@@ -88,6 +120,16 @@ public class GameController {
         }
     }
 
+    /**
+     * Processes user menu input during gameplay.
+     * Supports options to quit (0), shoot (1), print grid (2), print menu (3), and
+     * print log (4).
+     *
+     * @param input             the Scanner for reading player input
+     * @param log               the AuditSystem for recording game events
+     * @param grid              the current game grid
+     * @param currentPlayerMove the player number (1 or 2) whose turn it is
+     */
     private static void processUserInput(Scanner input, AuditSystem log, Grid grid, int currentPlayerMove) {
         String in;
         int num;
@@ -124,6 +166,12 @@ public class GameController {
         }
     }
 
+    /**
+     * Determines the game winner based on the number of ships sunk.
+     * A player wins by sinking all 5 of their opponent's ships.
+     *
+     * @return 1 if player 1 won, 2 if player 2 won, or 0 if there is no winner yet
+     */
     private static int getWinner() {
         if (player1ShipsSunk >= 5) {
             return 1;
@@ -134,6 +182,11 @@ public class GameController {
         return 0;
     }
 
+    /**
+     * Generates a random compass direction for ship placement.
+     *
+     * @return a random direction: "NORTH", "EAST", "SOUTH", or "WEST"
+     */
     private static String getRandomDirection() {
         int randNum = RANDOM.nextInt(4);
         return switch (randNum) {
@@ -144,6 +197,12 @@ public class GameController {
         };
     }
 
+    /**
+     * Randomly places all 5 ships on the given grid.
+     * Ships are placed at random locations and directions, ensuring no overlaps.
+     *
+     * @param grid the grid to place ships on
+     */
     private static void placeShipsRandomly(Grid grid) {
         int shipsPlaced = 0;
         while (true) {
@@ -164,6 +223,15 @@ public class GameController {
         }
     }
 
+    /**
+     * Runs the main game loop, managing turns, player input, and win conditions.
+     * Creates two 10x10 grids, places ships randomly, and alternates turns between
+     * players
+     * until one player sinks all 5 of the opponent's ships.
+     *
+     * @param input the Scanner for reading player input
+     * @param log   the AuditSystem for recording game events
+     */
     private static void runGame(Scanner input, AuditSystem log) {
         Grid player1Grid = new Grid(10, 10);
         Grid player2Grid = new Grid(10, 10);
