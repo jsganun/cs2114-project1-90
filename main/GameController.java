@@ -271,10 +271,35 @@ public class GameController {
     public static void main(String[] args) {
         AuditSystem log = new AuditSystem();
         try (Scanner input = new Scanner(System.in)) {
-            System.out.println("Press any key to start the game: ");
-            input.nextLine();
-            log.recordGameStart();
-            runGame(input, log);
+            while (true) {
+                System.out.println("Press any key to start the game: ");
+                input.nextLine();
+                log.recordGameStart();
+                runGame(input, log);
+                String in;
+                boolean cont;
+                while (true) {
+                    System.out.println("Would you like to play another game? (Y/N)");
+                    in = input.nextLine();
+                    switch (in.toUpperCase()) {
+                        case "Y", "YES" -> {
+                            cont = true;
+                        }
+                        case "N", "NO" -> {
+                            cont = false;
+                        }
+                        default -> {
+                            continue;
+                        }
+                    }
+                    break;
+                }
+                if (!cont) {
+                    break;
+                }
+                System.out.println("Starting another game!");
+            }
+            System.out.println("Session finished!");
         }
 
     }
