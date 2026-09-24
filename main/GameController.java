@@ -1,7 +1,7 @@
 package main;
 
 import gameboard.*;
-import ships.*;
+import java.util.Random;
 import java.util.Scanner;
 import ships.Ship;
 
@@ -10,6 +10,9 @@ import ships.Ship;
  */
 public class GameController {
     private static final String LARGE_WHITESPACE = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+    private static final Random RANDOM = new Random();
+    private static int player1ShipsSunk = 0;
+    private static int player2ShipsSunk = 0;
 
     private static void printGrid(Grid grid) {
         System.out.print(grid.toString());
@@ -77,6 +80,11 @@ public class GameController {
         if (isSunk) {
             log.recordSink(currentPlayerMove, row, col);
             System.out.println("You sank a ship!");
+            if (currentPlayerMove == 1) {
+                player1ShipsSunk++;
+            } else {
+                player2ShipsSunk++;
+            }
         }
     }
 
@@ -116,18 +124,63 @@ public class GameController {
         }
     }
 
+    private static int getWinner() {
+        if (player1ShipsSunk >= 5) {
+            return 1;
+        }
+        if (player2ShipsSunk >= 5) {
+            return 2;
+        }
+        return 0;
+    }
+
+    private static String getRandomDirection() {
+        int randNum = RANDOM.nextInt(4);
+        return switch (randNum) {
+            case 0 -> "NORTH";
+            case 1 -> "EAST";
+            case 2 -> "SOUTH";
+            default -> "WEST";
+        };
+    }
+
+    private static void placeShipsRandomly(Grid grid) {
+        int shipsPlaced = 0;
+        while (true) {
+            int r = RANDOM.nextInt(grid.getRows());
+            int c = RANDOM.nextInt(grid.getCols());
+            if (grid.getCell(r, c).containsShip()) {
+                continue;
+            }
+            Ship[] ships = grid.getShips();
+            boolean shipWasPlaced = grid.placeShip(ships[shipsPlaced], r, c, getRandomDirection());
+            if (!shipWasPlaced) {
+                continue;
+            }
+            shipsPlaced++;
+            if (shipsPlaced >= 5) {
+                return;
+            }
+        }
+    }
+
     private static void runGame(Scanner input, AuditSystem log) {
         Grid player1Grid = new Grid(10, 10);
         Grid player2Grid = new Grid(10, 10);
         Grid currentGrid;
         int currentPlayerMove = 1;
-        boolean quit = false;
+        placeShipsRandomly(player1Grid);
+        placeShipsRandomly(player2Grid);
         while (true) {
             currentGrid = currentPlayerMove == 1 ? player1Grid : player2Grid;
+            System.out.println(LARGE_WHITESPACE);
             printGrid(currentGrid);
             printMenu(currentPlayerMove);
             processUserInput(input, log, currentGrid, currentPlayerMove);
-            if (quit) {
+            int winner = getWinner();
+            if (winner > 0) {
+                System.out.println("Player " + winner + " won the game!");
+                log.recordGameWinner(winner);
                 break;
             }
             currentPlayerMove = currentPlayerMove == 1 ? 2 : 1;

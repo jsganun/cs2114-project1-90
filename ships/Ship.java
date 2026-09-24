@@ -13,7 +13,8 @@ public class Ship {
      *
      * @param name   the name of the ship
      * @param length the length of the ship
-     * @throws IllegalArgumentException if name is null or length is less than or equal to 0
+     * @throws IllegalArgumentException if name is null or length is less than or
+     *                                  equal to 0
      */
     public Ship(String name, int length) {
         if (name == null || length <= 0) {
@@ -66,7 +67,8 @@ public class Ship {
      *
      * @param cells an array of Cell objects representing the ship's position
      * @throws IllegalArgumentException if cells is null
-     * @throws IllegalArgumentException if the length of cells does not match the ship's length
+     * @throws IllegalArgumentException if the length of cells does not match the
+     *                                  ship's length
      */
     public void setCells(Cell[] cells) {
         if (cells == null) {
@@ -109,7 +111,8 @@ public class Ship {
     }
 
     /**
-     * Registers a hit on the ship by counting the number of cells that have been hit.
+     * Registers a hit on the ship by counting the number of cells that have been
+     * hit.
      */
     public void registerHit() {
         int hits = 0;
@@ -124,10 +127,12 @@ public class Ship {
     }
 
     /**
-     * Returns a string representation of the ship, including its name, length, hits taken, and sunk status.
+     * Returns a string representation of the ship, including its name, length, hits
+     * taken, and sunk status.
      *
      * @return a string representation of the ship
      */
+    @Override
     public String toString() {
         return name + ", " + length + ", " + hitsTaken + ", " + isSunk();
     }
