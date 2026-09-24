@@ -18,3 +18,4 @@ Run the program using the class name without `.java`:
 ```cmd
 java GameController
 ```
+[System Diagram](https://virginiatech-my.sharepoint.com/:i:/g/personal/jsganun_vt_edu/IQDs_pY4wO0QSK5X0CBIEsjrAS1vbtmDrDzozvbywqQyjII?e=fYuijU) for the project.
