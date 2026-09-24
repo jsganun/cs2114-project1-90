@@ -159,6 +159,10 @@ public class TestShip {
     @Test
     public void testRegisterHitPartial() {
         ship.setCells(cells);
+        // Add ship to cells so they register as "X" (hit) when shot
+        for (Cell cell : cells) {
+            cell.addShip(ship);
+        }
         cells[0].shoot();
         cells[1].shoot();
         ship.registerHit();
@@ -173,6 +177,10 @@ public class TestShip {
     @Test
     public void testRegisterHitFullySunk() {
         ship.setCells(cells);
+        // Add ship to cells so they register as "X" (hit) when shot
+        for (Cell cell : cells) {
+            cell.addShip(ship);
+        }
         for (Cell cell : cells) {
             cell.shoot();
         }
