@@ -84,23 +84,20 @@ public class GameController {
         int row = -1;
         int col = -1;
         while (true) {
-            System.out.println("Please enter the row:");
-            in = input.nextLine();
-            row = parseNumber(in);
-            if (row > -1) {
-                break;
+            System.out.println("Please enter coordinate (e.g., A1):");
+            in = input.nextLine().trim().toUpperCase();
+            if (in.length() >= 2 && in.charAt(0) >= 'A' && in.charAt(0) <= 'J') {
+                row = in.charAt(0) - 'A';
+                col = parseNumber(in.substring(1)) - 1;
+                if (col >= 0 && col < 10) {
+                    break;
+                }
             }
-        }
-        while (true) {
-            System.out.println("Please enter the column:");
-            in = input.nextLine();
-            col = parseNumber(in);
-            if (col > -1) {
-                break;
-            }
+            System.out.println("Invalid coordinate. Please use letter-number format (A1-J10).");
         }
         Cell cell = grid.getCell(row, col);
         boolean hit = cell.containsShip();
+        cell.shoot();
         log.recordShot(currentPlayerMove, row, col, hit);
         if (hit) {
             System.out.println("You hit a ship!");
@@ -108,6 +105,9 @@ public class GameController {
             System.out.println("You missed.");
         }
         Ship ship = cell.getShip();
+        if (ship != null) {
+            ship.registerHit();
+        }
         boolean isSunk = ship != null && ship.isSunk();
         if (isSunk) {
             log.recordSink(currentPlayerMove, row, col);
@@ -240,7 +240,7 @@ public class GameController {
         placeShipsRandomly(player1Grid);
         placeShipsRandomly(player2Grid);
         while (true) {
-            currentGrid = currentPlayerMove == 1 ? player1Grid : player2Grid;
+            currentGrid = currentPlayerMove == 1 ? player2Grid : player1Grid; // Players shoot at the opponent's grid!
             System.out.println(LARGE_WHITESPACE);
             printGrid(currentGrid);
             printMenu(currentPlayerMove);

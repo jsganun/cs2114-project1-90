@@ -7,6 +7,10 @@ import org.junit.jupiter.api.Test;
 import ships.Ship;
 import gameboard.Cell;
 
+/**
+ * Test class for the Ship component.
+ * Verifies standard behavior and exception handling for invalid inputs.
+ */
 public class TestShip {
 
     private Ship ship;
@@ -14,6 +18,9 @@ public class TestShip {
     private Cell cell2;
     private Cell[] cells;
 
+    /**
+     * Sets up the test environment before each test.
+     */
     @BeforeEach
     public void setUp() {
         ship = new Ship("Battleship", 4);
@@ -22,6 +29,9 @@ public class TestShip {
         cells = new Cell[] { cell1, cell2, new Cell(1, 3), new Cell(1, 4) };
     }
 
+    /**
+     * Tests the Ship constructor and its exception handling.
+     */
     @Test
     public void testShip() {
         assertNotNull(ship);
@@ -43,16 +53,25 @@ public class TestShip {
         assertTrue(caughtZeroLength);
     }
 
+    /**
+     * Tests retrieving the ship's name.
+     */
     @Test
     public void testGetName() {
         assertEquals("Battleship", ship.getName());
     }
 
+    /**
+     * Tests retrieving the ship's length.
+     */
     @Test
     public void testGetLength() {
         assertEquals(4, ship.getLength());
     }
 
+    /**
+     * Tests whether the ship properly registers being hit.
+     */
     @Test
     public void testIsHit() {
         assertFalse(ship.isHit());
@@ -62,6 +81,9 @@ public class TestShip {
         assertFalse(ship.isHit());
     }
 
+    /**
+     * Tests the sunk status of the ship.
+     */
     @Test
     public void testIsSunk() {
         assertFalse(ship.isSunk());
@@ -71,6 +93,9 @@ public class TestShip {
         assertFalse(ship.isSunk());
     }
 
+    /**
+     * Tests assigning cells to the ship and handles null assignment.
+     */
     @Test
     public void testSetCells() {
         ship.setCells(cells);
@@ -85,6 +110,9 @@ public class TestShip {
         assertTrue(caughtNullCells);
     }
 
+    /**
+     * Tests retrieving the array of cells occupied by the ship.
+     */
     @Test
     public void testGetCells() {
         assertEquals(4, ship.getCells().length);
@@ -94,6 +122,9 @@ public class TestShip {
         assertNotNull(ship.getCells()[0]);
     }
 
+    /**
+     * Tests if the ship accurately determines whether it occupies a specific cell.
+     */
     @Test
     public void testContainsCell() {
         ship.setCells(cells);
@@ -110,6 +141,9 @@ public class TestShip {
         assertTrue(caughtNullCell);
     }
 
+    /**
+     * Tests that a hit is successfully registered on the ship.
+     */
     @Test
     public void testRegisterHit() {
         ship.setCells(cells);
@@ -117,6 +151,9 @@ public class TestShip {
         assertFalse(ship.isHit());
     }
 
+    /**
+     * Tests the string representation of the ship.
+     */
     @Test
     public void testToString() {
         assertEquals("Battleship, 4, 0, false", ship.toString());

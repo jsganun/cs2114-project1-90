@@ -4,8 +4,14 @@ import org.junit.Test;
 
 import gameboard.Grid;
 
+/**
+ * Test class for the Grid component.
+ * Verifies grid display formatting and initialization.
+ */
 public class TestGrid {
-
+    /**
+     * Tests the string representation of an empty grid.
+     */
     @Test 
     public void testToString() {
         Grid grid = new Grid(10, 10);
